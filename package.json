@@ -22,14 +22,17 @@
   "repository": "https://github.com/objectIsNotDefined/awesome-commit",
   "author": "Janber",
   "license": "MIT",
-  "devDependencies": {
-    "@babel/cli": "^7.12.8",
-    "@babel/core": "^7.12.9",
-    "@babel/preset-env": "^7.12.7",
+  "dependencies": {
     "chalk": "^4.1.0",
     "commander": "^6.2.0",
     "inquirer": "^7.3.3",
     "log-symbols": "^4.0.0",
-    "ora": "^5.1.0"
+    "ora": "^5.1.0",
+    "simple-git": "^2.24.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.12.8",
+    "@babel/core": "^7.12.9",
+    "@babel/preset-env": "^7.12.7"
   }
 }

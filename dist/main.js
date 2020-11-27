@@ -1,24 +1,27 @@
 "use strict";
 
-const exec = require('util').promisify(require("child_process").exec);
+const log = require('./assets/log');
 
 const queryForm = require('./assets/query_form');
 
+const simpleGit = require('simple-git');
+
+const git = simpleGit();
 let msg_form = [{
   type: 'list',
   name: 'name',
-  message: '修改类型',
+  message: 'type      ',
   loop: false,
   choices: [{
-    name: 'feat: 新功能、新特性',
+    name: 'feat:     新功能、新特性',
     value: 'feat',
     short: 'feat'
   }, {
-    name: 'fix: 修改 bug',
+    name: 'fix:      修改 bug',
     value: 'fix',
     short: 'fix'
   }, {
-    name: 'perf: 更改代码，以提高性能',
+    name: 'perf:     更改代码，以提高性能',
     value: 'perf',
     short: 'perf'
   }, {
@@ -26,35 +29,35 @@ let msg_form = [{
     value: 'refactor',
     short: 'refactor'
   }, {
-    name: 'docs: 文档修改',
+    name: 'docs:     文档修改',
     value: 'docs',
     short: 'docs'
   }, {
-    name: 'style: 代码格式修改, 注意不是 css 修改（例如分号修改）',
+    name: 'style:    代码格式修改, 注意不是 css 修改（例如分号修改）',
     value: 'style',
     short: 'style'
   }, {
-    name: 'test: 测试用例新增、修改',
+    name: 'test:     测试用例新增、修改',
     value: 'test',
     short: 'test'
   }, {
-    name: 'build: 影响项目构建或依赖项修改',
+    name: 'build:    影响项目构建或依赖项修改',
     value: 'build',
     short: 'build'
   }, {
-    name: 'revert: 恢复上一次提交',
+    name: 'revert:   恢复上一次提交',
     value: 'revert',
     short: 'revert'
   }, {
-    name: 'ci: 持续集成相关文件修改',
+    name: 'ci:       持续集成相关文件修改',
     value: 'ci',
     short: 'ci'
   }, {
-    name: 'chore: 其他修改（构建过程或辅助工具的变动）',
+    name: 'chore:    其他修改（构建过程或辅助工具的变动）',
     value: 'chore',
     short: 'chore'
   }, {
-    name: 'release: 发布新版本',
+    name: 'release:  发布新版本',
     value: 'release',
     short: 'release'
   }, {
@@ -66,7 +69,7 @@ let msg_form = [{
 }, {
   type: 'input',
   name: 'subject',
-  message: '修改概述',
+  message: 'subject   ',
   prefix: '2.',
   filter: val => {
     return val.trim();
@@ -74,31 +77,58 @@ let msg_form = [{
   validate: val => {
     let msg = val.trim();
     if (msg) return true;
-    return '请输入本次提交主要内容';
+    return 'please enter the subject';
   }
 }, {
   type: 'input',
   name: 'body',
-  message: '详细内容',
-  prefix: '2.',
+  message: 'body      ',
+  prefix: '3.',
   filter: val => {
     return val.trim();
   }
 }, {
   type: 'input',
   name: 'footer',
-  message: '注释',
-  prefix: '2.',
-  suffix: '补充说明,如:bug编号',
+  message: 'footer    ',
+  prefix: '4.',
   filter: val => {
     return val.trim();
   }
 }];
 
 const handle = async () => {
-  let config = await queryForm(msg_form);
-  let commit_msg = `${config.name}: ${config.subject}\n\n${config.body}\n\n${config.footer}`.trim();
-  await exec(`git add . && git commit -m '${commit_msg}'`);
+  await git.cwd(process.cwd());
+
+  try {
+    await git.add('./*');
+  } catch (e) {
+    log('error', String(e).trim());
+    process.exit();
+  }
+
+  let git_status = null;
+
+  try {
+    git_status = await git.status();
+  } catch (e) {
+    log('error', String(e).trim());
+    process.exit();
+  }
+
+  if (git_status.files.length == 0) {
+    log('error', `Error: nothing to commit`);
+    process.exit();
+  }
+
+  try {
+    let config = await queryForm(msg_form);
+    let commit_msg = `${config.name}: ${config.subject}\n\n${config.body}\n\n${config.footer}`.trim();
+    await git.commit(commit_msg);
+    log('success', 'success');
+  } catch (e) {
+    log('error', String(e).trim());
+  }
 };
 
 handle();
