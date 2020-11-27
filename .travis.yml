@@ -13,5 +13,7 @@ script:
 deploy:
   provider: npm
   email: 'objectisnotdefined@gmail.com'
+  on:
+    branch: master
 
 
