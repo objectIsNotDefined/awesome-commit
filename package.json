@@ -1,6 +1,6 @@
 {
   "name": "awesome-commit",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "git-commit, easy-to-use, awesome-commit",
   "main": "index.js",
   "files": [
