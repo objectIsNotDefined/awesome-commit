@@ -17,3 +17,4 @@ You just need run `acm` in your working dir
 ```
 acm
 ```
+![example](https://raw.githubusercontent.com/objectIsNotDefined/awesome-commit/master/images/example.png)
