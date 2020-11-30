@@ -28,6 +28,7 @@
     "inquirer": "^7.3.3",
     "log-symbols": "^4.0.0",
     "ora": "^5.1.0",
+    "os-locale": "^5.0.0",
     "simple-git": "^2.24.0"
   },
   "devDependencies": {
