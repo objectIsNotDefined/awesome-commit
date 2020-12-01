@@ -6,59 +6,60 @@ const osLocale = require('os-locale')
 
 let getFormData = async () => {
   let locale = await osLocale()
-  locale = 'en-US'
+  // 如果本机语言不是中文，则显示英文
+  locale !== 'zh-CN' && (locale = 'en-US')
   const txt_config = {
     feat: {
       'zh-CN': '新功能、新特性',
-      'en-US': ''
+      'en-US': 'new function or feature'
     },
     fix: {
       'zh-CN': '修改 bug',
-      'en-US': ''
+      'en-US': 'fix bug'
     },
     perf: {
       'zh-CN': '更改代码，以提高性能',
-      'en-US': ''
+      'en-US': 'change code to improve performance'
     },
     refactor: {
       'zh-CN': '代码重构（重构，在不影响代码内部行为、功能下的代码修改）',
-      'en-US': ''
+      'en-US': 'code refactoring (code modification without affecting the internal behavior and function of the code)'
     },
     docs: {
       'zh-CN': '文档修改',
-      'en-US': ''
+      'en-US': 'document modification'
     },
     style: {
       'zh-CN': '代码格式修改, 注意不是 css 修改（例如分号修改）',
-      'en-US': ''
+      'en-US': 'code format, not css modification'
     },
     test: {
       'zh-CN': '测试用例新增、修改',
-      'en-US': ''
+      'en-US': 'add or modified test cases'
     },
     build: {
       'zh-CN': '影响项目构建或依赖项修改',
-      'en-US': ''
+      'en-US': 'project construction or dependency modification'
     },
     revert: {
       'zh-CN': '恢复上一次提交',
-      'en-US': ''
+      'en-US': 'resume the last commit'
     },
     ci: {
       'zh-CN': '持续集成相关文件修改',
-      'en-US': ''
+      'en-US': 'continuous integration file modification'
     },
     chore: {
       'zh-CN': '其他修改（构建过程或辅助工具的变动）',
-      'en-US': ''
+      'en-US': 'other modifications (changes in the construction process or auxiliary tools)'
     },
     release: {
       'zh-CN': '发布新版本',
-      'en-US': ''
+      'en-US': 'release new version'
     },
     workflow: {
       'zh-CN': '工作流相关文件修改',
-      'en-US': ''
+      'en-US': 'workflow file modification'
     }
   }
   return [
