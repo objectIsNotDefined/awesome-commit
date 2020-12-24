@@ -1,6 +1,6 @@
 {
   "name": "awesome-commit",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "git-commit, easy-to-use, awesome-commit",
   "main": "index.js",
   "files": [
@@ -12,7 +12,8 @@
     "watch": "npm run compile -- --watch"
   },
   "bin": {
-    "acm": "./bin/cmd"
+    "awesome-commit": "./bin/main",
+    "acm": "./bin/acm"
   },
   "homepage": "https://github.com/objectIsNotDefined/awesome-commit#readme",
   "bugs": {
